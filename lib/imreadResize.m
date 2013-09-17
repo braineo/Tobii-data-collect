@@ -1,0 +1,3 @@
+function img = imreadResize(filename, Calib)
+    img = imresize(imread(filename),...
+        [Calib.mondims1.height Calib.mondims1.width]);
