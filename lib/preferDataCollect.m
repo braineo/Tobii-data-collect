@@ -23,7 +23,7 @@ files=dir(fullfile(stimfolder,'*.jpg'));
 subsetSize = SETTING.restAfterViewImgNum;
 subsetNum = ceil(length(filenames)/subsetSize);
 imgIdx = cell(1,subsetNum);
-shuffelOrder = randperm(length(filenames));
+shuffelOrder = 1:length(filenames); %  no shuffle randperm(length(filenames));
 for i = 1:(subsetNum-1)
     imgIdx{i} = shuffelOrder(1+(i-1)*subsetSize:i*subsetSize);
 end
@@ -37,7 +37,6 @@ end
 save('./tmp/subset.mat','imgIdx','-v7.3');
 
 viewedImgNum = 0;
-tetio_startTracking;
 
 for subseti = expRestartOffset:subsetNum
     for i = imgIdx{subseti}
@@ -54,7 +53,6 @@ for subseti = expRestartOffset:subsetNum
             tetio_stopTracking;
             waitforbuttonpress; % pause, press any key when ready to start
             calibrateTracker(Calib);
-            tetio_startTracking;
         end
 
         img = imreadResize(SETTING.intervalImage, Calib);
@@ -63,12 +61,16 @@ for subseti = expRestartOffset:subsetNum
 
         img = imreadResize(strcat(stimfolder,filenames{i}), Calib);
         fullscreen(img, DISPLAYNUM);
-%         pause(SETTING.durationInSeconds); %for test, can be deleted
+        % read gaze data
+        tetio_startTracking;
         [leftEye, rightEye, timeStamp] = ...
-            DataCollect(SETTING.durationInSeconds, SETTING.pauseTimeInSeconds);
+            DataCollect(SETTING.durationInSeconds, SETTING.frameRate);
+        tetio_stopTracking;
+        
         leftEyeAll{i} = leftEye;
         rightEyeAll{i} = rightEye;
         timeStampAll{i} = timeStamp;
+        % rate picture
         img = imreadResize(SETTING.rateImage, Calib);
         fullscreen(img, DISPLAYNUM);
         rating = 0;
@@ -76,6 +78,7 @@ for subseti = expRestartOffset:subsetNum
             rating = getkey;
             rating = rating - 48;
         end
+        
         imgInfo{i}.fileName = filenames{i};
         imgInfo{i}.folder = stimfolder;
         imgInfo{i}.rating = rating;
@@ -85,6 +88,5 @@ for subseti = expRestartOffset:subsetNum
 end
 closescreen;
 
-tetio_stopTracking; 
 tetio_disconnectTracker; 
 tetio_cleanUp;

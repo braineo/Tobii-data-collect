@@ -48,9 +48,9 @@ end
 
 fprintf('Connecting to tracker "%s"...\n', trackerId);
 tetio_connectTracker(trackerId)
-	
+% tetio_setFrameRate(SETTING.frameRate)
 currentFrameRate = tetio_getFrameRate;
-fprintf('Frame rate: %d Hz.\n', currentFrameRate);
+fprintf('Frame rate: %d Hz.\n', currentFrameRate); %Tobii X300 FrameRate, set to 120HZ if it is not
 
 % *************************************************************************
 %
@@ -59,7 +59,7 @@ fprintf('Frame rate: %d Hz.\n', currentFrameRate);
 %
 % *************************************************************************
 
-subjectInfo = getSubjectInfo();
+% subjectInfo = getSubjectInfo();
 
 % *************************************************************************
 %
@@ -69,7 +69,7 @@ subjectInfo = getSubjectInfo();
 fprintf('Please select a viewing task:\n');
 fprintf('1. Free viewing\n2. Preference\n3. Memorize\n');
 prompt = 'input the task number: ';
-taskType = input(prompt);
+taskType = 2;%input(prompt);
 if(taskType == 1)
     % free viewing function
     [leftEyeAll, rightEyeAll, timeStampAll, imgInfo] = freeViewDataCollect(Calib,SETTING);

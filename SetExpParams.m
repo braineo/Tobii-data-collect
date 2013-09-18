@@ -1,5 +1,5 @@
 % global SETTING
-
+SETTING.frameRate = 120;
 SETTING.freeStimfolder = '../img/free_viewing/';
 SETTING.prefStimfolder = '../img/preference/';
 %SETTING.stimuNum = 15;

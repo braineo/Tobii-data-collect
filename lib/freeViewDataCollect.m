@@ -15,7 +15,6 @@ calibrateTracker(Calib);
 img = imreadResize(SETTING.instructionFreeImage, Calib);
 fullscreen(img, DISPLAYNUM);
 pause(SETTING.restRemindTimeInSecond);
-% closescreen;
 stimfolder = SETTING.freeStimfolder;
 files=dir(fullfile(stimfolder,'*.jpg'));    
 [filenames{1:size(files,1)}] = deal(files.name);
@@ -38,7 +37,6 @@ end
 save('./tmp/subset.mat','imgIdx','-v7.3');
 
 viewedImgNum = 0;
-tetio_startTracking;
 
 for subseti = expRestartOffset:subsetNum
     for i = imgIdx{subseti}
@@ -55,7 +53,6 @@ for subseti = expRestartOffset:subsetNum
             tetio_stopTracking;
             waitforbuttonpress; % pause, press any key when ready to start
             calibrateTracker(Calib);
-            tetio_startTracking;
         end
 
         img = imreadResize(SETTING.intervalImage, Calib);
@@ -64,9 +61,12 @@ for subseti = expRestartOffset:subsetNum
 
         img = imreadResize(strcat(stimfolder,filenames{i}), Calib);
         fullscreen(img, DISPLAYNUM);
-    %     pause(SETTING.durationInSeconds); %for test, can be deleted
+        % read gaze data
+        tetio_startTracking;
         [leftEye, rightEye, timeStamp] = ...
-            DataCollect(SETTING.durationInSeconds, SETTING.pauseTimeInSeconds);
+            DataCollect(SETTING.durationInSeconds, SETTING.frameRate);
+        tetio_stopTracking;
+        
         leftEyeAll{i} = leftEye;
         rightEyeAll{i} = rightEye;
         timeStampAll{i} = timeStamp;
@@ -78,6 +78,5 @@ for subseti = expRestartOffset:subsetNum
 end
 closescreen;
 
-tetio_stopTracking; 
 tetio_disconnectTracker; 
 tetio_cleanUp;
