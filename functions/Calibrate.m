@@ -76,7 +76,7 @@ function calibPlotData = Calibrate(Calib,morder,iter,donts)
                     tetio_removeCalibPoint(Calib.points.x(morder(i)), Calib.points.y(morder(i)));
                     disp(['deleted point ' num2str(morder(i)) ' and now adding it, where i = ' num2str(i)])
                 end
-                tetio_addCalibPoint(Calib.points.x(morder(i)),Calib.points.y(morder(i)));
+                tetio_addCalibPoint(Calib.points.x(morder(i)),Calib.points.realy(morder(i)));
                 pause(0.2);
             end
             ms = ms-ceil((Calib.BigMark - Calib.SmallMark)/step);

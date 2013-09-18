@@ -10,7 +10,12 @@ Calib.MainMonid = 1;
 Calib.TestMonid = 1;
 
 Calib.points.x = [0.1 0.9 0.5 0.9 0.1];  % X coordinates in [0,1] coordinate system 
-Calib.points.y = [0.1 0.1 0.5 0.9 0.9];  % Y coordinates in [0,1] coordinate system 
+Calib.points.y = [0.1 0.1 0.5 0.9 0.9];  % Y coordinates in [0,1] coordinate system
+% switch to display coordinate
+Calib.titleBarWidth = 20;
+Calib.points.realy = ((Calib.mondims1.height-Calib.titleBarWidth).* Calib.points.y ...
+    + Calib.titleBarWidth)/Calib.mondims1.height;
+
 Calib.points.n = size(Calib.points.x, 2); % Number of calibration points
 Calib.bkcolor = [0.85 0.85 0.85]; % background color used in calibration process
 Calib.fgcolor = [0 0 1]; % (Foreground) color used in calibration process

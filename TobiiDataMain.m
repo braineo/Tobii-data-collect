@@ -59,7 +59,7 @@ fprintf('Frame rate: %d Hz.\n', currentFrameRate); %Tobii X300 FrameRate, set to
 %
 % *************************************************************************
 
-% subjectInfo = getSubjectInfo();
+subjectInfo = getSubjectInfo();
 
 % *************************************************************************
 %
@@ -69,7 +69,7 @@ fprintf('Frame rate: %d Hz.\n', currentFrameRate); %Tobii X300 FrameRate, set to
 fprintf('Please select a viewing task:\n');
 fprintf('1. Free viewing\n2. Preference\n3. Memorize\n');
 prompt = 'input the task number: ';
-taskType = 2;%input(prompt);
+taskType = input(prompt);
 if(taskType == 1)
     % free viewing function
     [leftEyeAll, rightEyeAll, timeStampAll, imgInfo] = freeViewDataCollect(Calib,SETTING);

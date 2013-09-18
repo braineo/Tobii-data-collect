@@ -18,7 +18,7 @@ dataSize = 0;
 while(dataSize < durationInSeconds*frameRate)
     
     [lefteye, righteye, timestamp, trigSignal] = tetio_readGazeData;
-    
+    pause(0.01)
     if isempty(lefteye)
         continue;
     end

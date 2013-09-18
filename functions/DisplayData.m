@@ -11,12 +11,12 @@ rightGazePoint2d.x = rightEyeAll(:,7);
 rightGazePoint2d.y = rightEyeAll(:,8);
 leftGazePoint2d.x = leftEyeAll(:,7);
 leftGazePoint2d.y = leftEyeAll(:,8);
-gaze.x = mean([rightGazePoint2d.x, leftGazePoint2d.x],2);
-gaze.y = mean([rightGazePoint2d.y, leftGazePoint2d.y],2);
+gaze.x = mean([rightGazePoint2d.x, leftGazePoint2d.x],2);%*1920;
+gaze.y = mean([rightGazePoint2d.y, leftGazePoint2d.y],2);%*1080;
 
 hold on; 
 scatter (gaze.x,gaze.y,50,'filled');
-axis([0 1 0 1]); 
+% axis([0 1 0 1]); 
 
 end
 
